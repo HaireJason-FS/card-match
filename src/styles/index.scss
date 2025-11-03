@@ -1,3 +1,13 @@
-html {
-  background: gray;
+//root styles
+$font-family: "open-sans", sans-serif;
+$font-bold: 700;
+$font-regular: 400;
+$background-color: #1C531D;
+$card-color: #238AB6;
+
+body {
+  font-family: $font-family;
+  background-color: $background-color;
+  margin: 0;
+  padding: 0;
 }
