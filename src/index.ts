@@ -1,8 +1,69 @@
 // Imports your SCSS stylesheet
 import '@/styles/index.scss';
 
+import "./styles/index.scss";
+import { Game } from "./game";
 
-// The objective of the game is to find all sets of matching cards within a maximum of 3 tries/attempts. There will be a total of six (6) cards flipped face down at the start. The set will include 3 pairs of matching cards. The player must try to match all three pairs of cards in fewer than 3 attempts. An attempt doesn't represent just one card flip; rather, it involves comparing 2 cards in one try. If the cards don't match, they are flipped back to their face-down state, and the player's remaining attempts are reduced by one.
 
-//At the start of each new game, the cards must reshuffle to different positions and values. Note that we do need to include special cards like Jacks, Queens, Kings, or Aces. (Labeled as the name entails)
-//This project will use HTML, SCSS, and TypeScript.
+import clogo from "./IMG/c-logo.png";
+import cpplogo from "./IMG/c++-logo.png";
+import cardback from "./IMG/card-flip-card-image.png";
+import csharplogo from "./IMG/csharp-logo.png";
+import csslogo from "./IMG/css3-logo.png";
+import gologo from "./IMG/goMascot-logo.png";
+import htmlogo from "./IMG/HTML-logo.png";
+import javalogo from "./IMG/java-logo.png";
+import jslogo from "./IMG/JavaScript-Logo.png";
+import phplogo from "./IMG/php-logo.png";
+import pythonlogo from "./IMG/python-logo.png";
+
+const images: string[] = [
+  clogo,
+  cpplogo,
+  csharplogo,
+  csslogo,
+  gologo,
+  htmlogo,
+  javalogo,
+  jslogo,
+  phplogo,
+  pythonlogo,
+  cardback,
+];
+
+
+const gameBoard = document.getElementById("game-board") as HTMLElement;
+const triesDisplay = document.getElementById("tries") as HTMLElement;
+
+function startGame() {
+  const selectedDifficulty = (document.querySelector('input[name="difficulty"]:checked') as HTMLInputElement).value;
+
+  let pairs = 3;
+  let tries = 3;
+  let columns = 3;
+
+  if (selectedDifficulty === "medium") {
+    pairs = 6;
+    tries = 6;
+    columns = 4;   // grid layout 4 × 3
+  }
+
+  if (selectedDifficulty === "hard") {
+    pairs = 10;
+    tries = 9;
+    columns = 5;   // grid layout 5 × 4
+  }
+
+  const game = new Game(pairs, images, cardback, tries);
+  triesDisplay.textContent = `Attempts Left: ${tries}`;
+  gameBoard.style.gridTemplateColumns = `repeat(${columns}, 120px)`;
+  game.render(gameBoard, triesDisplay);
+}
+
+// Start once on load
+startGame();
+
+// Restart when difficulty is changed
+document.querySelectorAll('input[name="difficulty"]').forEach(radio => {
+  radio.addEventListener("change", startGame);
+});

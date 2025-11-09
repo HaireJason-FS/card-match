@@ -24,6 +24,13 @@ module.exports = {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name][ext]'
+        },
+      },
     ],
   },
   plugins: [
@@ -38,5 +45,7 @@ module.exports = {
     static: './build',
     open: true
   },
+  
   mode: 'development'
 };
+
